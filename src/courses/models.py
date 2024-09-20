@@ -1,6 +1,8 @@
 from django.db import models
 
 
+def handle_upload(instance, filename):
+    return filename
 
 class AccessRequirement(models.TextChoices):
     Anyone = "any", "Anyone"
@@ -12,14 +14,14 @@ class PublishStatus(models.TextChoices):
     COMING_SOON = 'soon', "Coming Soon"
     DRAFT = 'draft', 'Draft'
 
-
 class Course(models.Model):
-    title = models.CharField('Title', max_length=150)
-    description = models.TextChoices(blank=True, null=True)
+    title = models.CharField(max_length=150)
+    description = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to=handle_upload, blank=True, null=True)
     acces = models.CharField(
-        max_length=10,
+        max_length=14,
         choices=AccessRequirement.choices,
-        default=AccessRequirement.Anyone
+        default=AccessRequirement.EMAIL_REQUIRED
     )
     status = models.CharField(
         max_length=10,
