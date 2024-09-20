@@ -1,5 +1,10 @@
 from django.db import models
 
+import helpers
+
+
+helpers.cloudinary_init()
+
 
 def handle_upload(instance, filename):
     return filename
