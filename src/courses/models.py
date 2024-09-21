@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 import helpers
 
@@ -22,8 +23,8 @@ class PublishStatus(models.TextChoices):
 class Course(models.Model):
     title = models.CharField(max_length=150)
     description = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to=handle_upload, blank=True, null=True)
-    acces = models.CharField(
+    image = CloudinaryField('image', null=True)
+    access = models.CharField(
         max_length=14,
         choices=AccessRequirement.choices,
         default=AccessRequirement.EMAIL_REQUIRED
