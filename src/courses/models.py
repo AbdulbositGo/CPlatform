@@ -7,9 +7,6 @@ import helpers
 helpers.cloudinary_init()
 
 
-def handle_upload(instance, filename):
-    return filename
-
 class AccessRequirement(models.TextChoices):
     Anyone = "any", "Anyone"
     EMAIL_REQUIRED = 'email_required', "Email Required"
@@ -42,4 +39,30 @@ class Course(models.Model):
     def is_published(self):
         return self.status == PublishStatus.PUBLISHED
     
+    @property
+    def image_admin(self):
+        if not self.image:
+            return ''
+        image_options = {
+            'width': 200
+        }
+        url = self.image.image(**image_options)
+        return url
+        
+    
+class Lesson(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    title = models.CharField(max_length=150)
+    description = models.TextField(blank=True, null=True)
+    thumbnail = CloudinaryField('image', blank=True, null=True)
+    video = CloudinaryField('video', resource_type='video', blank=True, null=True)
+    access = models.BooleanField(default=False, 
+        help_text="Even if the user does not have access to the course,\
+        can still access this lesson"
+    )
+    status = models.CharField(
+        max_length=10,
+        choices=PublishStatus.choices,
+        default=PublishStatus.PUBLISHED
+    )
     
