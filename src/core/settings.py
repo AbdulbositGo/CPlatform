@@ -17,8 +17,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 LOCAL_CDN = BASE_DIR.parent / "local-cdn"
 
 
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -59,7 +57,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templaates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
