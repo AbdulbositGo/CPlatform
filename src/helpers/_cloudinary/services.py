@@ -1,4 +1,4 @@
-
+from django.template.loader import get_template
 
 def get_cloudinary_image(
     instance,
@@ -28,7 +28,8 @@ def get_cloudinary_video(
         fetch_format='auto',
         quality='auto',
         control=True,
-        autoplay=True
+        autoplay=True,
+        template_name="video.html"
     ):
     if not hasattr(instance, field_name):
         return ''
@@ -49,7 +50,13 @@ def get_cloudinary_video(
         video_options['heigth'] = heigth
     if width and heigth:
         video_options['crop'] = 'limit'
-    if as_html:
-        return video_object.video(**video_options)
+        
+    url = video_object.build_url(**video_options)
     
-    return video_object.build_url(**video_options)
+    if as_html:
+        return get_template(template_name).render({
+            'url': url,
+            'thumbnail': get_cloudinary_image(instance, field_name='thumbnail', width=width)
+        })
+    
+    return 

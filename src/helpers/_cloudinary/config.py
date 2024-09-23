@@ -1,12 +1,10 @@
 import cloudinary
-from decouple import config
+from django.conf import settings
 
 
-CLOUDINARY_CLUOD_NAME = config('CLOUDINARY_CLUOD_NAME')
-CLOUDINARY_PUBLIC_KEY = config('CLOUDINARY_PUBLIC_KEY')
-CLOUDINARY_SECRET_KEY = config('CLOUDINARY_SECRET_KEY')
-
-
+CLOUDINARY_CLUOD_NAME = settings.CLOUDINARY_CLUOD_NAME
+CLOUDINARY_PUBLIC_KEY = settings.CLOUDINARY_PUBLIC_KEY
+CLOUDINARY_SECRET_KEY = settings.CLOUDINARY_SECRET_KEY
 
 
 def cloudinary_init():
